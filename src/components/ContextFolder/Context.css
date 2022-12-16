@@ -1,0 +1,17 @@
+.AuthUser{
+    display: flex;
+    position: relative;
+    float: right;
+    top: 0;
+    flex-direction: column;
+    border: 1px solid rgb(245, 222, 222);
+}
+.logoutbutton{
+    width: 70px;
+    height: 20px;
+    border-radius: 50px;
+    border: none;
+    position: relative;
+    background-color: rgb(123, 255, 0);
+}
+ 

@@ -1,50 +1,38 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
-import { useRef } from 'react'
 
 import { userInfoContext } from '../ContextFolder/Context'
 
 import { useContext } from 'react'
-import { useNavigate } from 'react-router-dom'
+// import { useNavigate } from 'react-router-dom'
 
-// import {usenavigate} from  'react'
 
 function Profile() {
-  const data = useContext(userInfoContext)
-
-  const navigate =  useNavigate()
-  console.log( data);
-
-   let mydata = {
-        name: '',
-        age: ''
-    }
-  const nameRef = useRef();
-  const ageRef = useRef();
-
-
-  const saveData = (e) => {
-    e.preventDefault()
-
-
-    mydata.name = nameRef.current.value
-    mydata.age = ageRef.current.value
-    data.setUserData([...data.userData, mydata])
-     
-    e.target.reset();
-
-    navigate("/")
-  }
+  const [authUser, setAuthUser] = useState(false)
+ 
+  const { authUserData, setauthUserData } = useContext(userInfoContext)
+  
+      
 
   return (
-    <div>
-      <h3>profile page</h3>
-      <form  onSubmit={saveData} >
-        <input type="text" name='Name' placeholder='Full name' ref={nameRef} />
-        <input type="text" name='age' placeholder=' Age ' ref={ageRef} />
-        <input    type="submit"  value='submit'/>
+    <div className='tabledetail' >
+      <h3>Profile Page View </h3> 
+      <table className='tabledetail1'  >
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Phone No. </th>
+
+        </tr>
+
+        
+          <tr  >
+            <td>{authUserData.UserName}</td>
+            <td>{authUserData.Email}</td>
+            <td>{authUserData.Password}</td>
+          </tr>
       
-      </form>
+      </table>
     </div>
   )
 }

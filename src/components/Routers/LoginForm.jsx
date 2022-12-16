@@ -1,30 +1,47 @@
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+
+
+import { userInfoContext } from '../ContextFolder/Context'
+
+import { useContext } from 'react'
 
 function LoginForm() {
     const Email = useRef()
     const Password = useRef()
     const navigate = useNavigate()
+    const [Userpresent, setUserPresent] = useState(false)
+    const {authUserData,setauthUserData, setShow} = useContext(userInfoContext)
 
-    const DataCheck = () => {
+    
+    const DataCheck = (value) => {
         let data = JSON.parse(localStorage.getItem('userData'))
-        console.log(data);
+     
         if (data) {
-            data.filter((val) => {
-                if (!val.Email === Email) {
-                    console.log('Email  Not Present')
-                    return false
-                }
-                else if (!val.Password == Password) {
-                    console.log('Password Not Present')
-                    return false
+            const UserDataFromLocatStorage = data.find((val) => {
+                return (val.Email === value.Email)
+
+            })
+            if (UserDataFromLocatStorage) {
+                if (UserDataFromLocatStorage.Password === value.Password) {
+                    setUserPresent(false)
+                    setauthUserData(UserDataFromLocatStorage)
+                    setShow(true)
+                    navigate('/profile')
                 }
                 else {
-                    console.log('Email Present')
-                    return true
-
+                    setUserPresent(false)
+                    setShow(false)
+                    alert('Password Not Matched ')
+                    
                 }
-            })
+            }
+            else{
+                console.log('Email Not Present ');
+                setUserPresent(true)
+            }
+
+
         }
     }
 
@@ -42,6 +59,11 @@ function LoginForm() {
         return /\d/.test(str);
     }
 
+    const LoginuserData = {
+        Email: '',
+        Password: ''
+    }
+
     const ValiDateUser = (e) => {
         e.preventDefault()
 
@@ -57,15 +79,11 @@ function LoginForm() {
             alert("Password Should contain at least 1 numeric Digit")
             return
         }
-        if (!DataCheck()) {
-            navigate('/')
-             
-        }
-        else {
-             
-            console.log('Not present');
-            alert('Invalid Email and  Password ')
-        }
+
+        LoginuserData[Email.current.name] = Email.current.value;
+        LoginuserData[Password.current.name] = Password.current.value;
+        DataCheck(LoginuserData)
+        
 
     }
 
@@ -82,8 +100,8 @@ function LoginForm() {
                 </lable><br /><br />
                 <button type='submit' value='submit'>Login </button>
             </form>
-     
 
+            { Userpresent && <><h5>Email Not Present SignUp First <button onClick={()=> navigate('/signup')}>SignUp</button></h5> </>}
         </div>
     )
 }

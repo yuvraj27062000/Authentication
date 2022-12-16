@@ -37,23 +37,17 @@ function SignUpForm() {
 
         }
         else{
-            data.filter((val)=>{
-                if(val.Email === value.Email){
-                    alert('This Mail is Already Taken ')
-                    return true
-
-                }
-                else if(val.Mobile === value.Mobile){
-                    alert('This Mobile No. is Already Taken ')
-                    return true
+            const checkUser = data.find((val)=>{
+                return val.Email === value.Email                  
+                })
+                if(checkUser){
+                    alert('This Email is Already Taken')
                 }
                 else{
                     data.push(value);
                     localStorage.setItem('userData', JSON.stringify(data))
-                    return false
+                    navigate('/login')                    
                 }
-            })
-             
         }
 
     }
@@ -97,16 +91,9 @@ function SignUpForm() {
     userData[Password.current.name] = Password.current.value;
     userData[Mobile.current.name] = Mobile.current.value;
     userData[Address.current.name] = Address.current.value;
-    
+    SaveData(userData)
 
-    if(SaveData(userData)){
-        return false
-    }
-    else{
-        console.log('userData' , userData);
-        navigate('/login')
-    }
-   
+    
     }
 
     return (
@@ -117,7 +104,7 @@ function SignUpForm() {
                     <input type={'text'} name='UserName' id='UserName' ref={UserName} required/>
                 </lable><br/><br/>
                 <lable>Email :
-                    <input type={'Email'} name='Email' id='Email' ref={Email} required/>
+                    <input type={'Email'}   name='Email' id='Email' ref={Email} required/>
                 </lable><br/><br/>
                 <lable>Password :
                     <input type={'password'} name='Password' id='Password' ref={Password} required />

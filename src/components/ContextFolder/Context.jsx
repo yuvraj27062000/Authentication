@@ -1,27 +1,34 @@
 import React from 'react'
 import { useState } from 'react'
-
+import './Context.css'
 import { createContext } from 'react'
 
-export   const userInfoContext = createContext();
+export const userInfoContext = createContext();
 
-export  function Context(Props) {
-    // let data = {
-    //     name: 'Default',
-    //     age: 'Default'
-    // }
-        const [userData,setUserData] = useState([
-    ])    
+export function Context(Props) {
+
+    const [authUserData, setauthUserData] = useState({})
 
 
 
-    
+    const [show , setShow] = useState(false);
+
+     
 
 
     return (
-        <userInfoContext.Provider value={ {userData:userData,setUserData:setUserData} }  >
-            {Props.children}
-        </userInfoContext.Provider>
+        <>
+            {show && <div className='AuthUser'>
+                <p> {authUserData.UserName} </p><span></span>
+
+                <button className='logoutbutton' onClick={() => { setauthUserData({})
+                 setShow(false) }} > Logout </button>
+            </div>}
+
+            <userInfoContext.Provider value={{ authUserData, setauthUserData ,setShow}}  >
+                {Props.children}
+            </userInfoContext.Provider>
+        </>
     )
 
 

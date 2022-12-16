@@ -14,9 +14,11 @@ import { Home } from './components/Routers/Home';
 import { Context } from './components/ContextFolder/Context'
 import { LoginForm } from './components/Routers/LoginForm';
 import { SignUpForm } from './components/Routers/SignUpForm';
+import { NavigateUser} from './components/Routers/Navigator/Navigate'
+
 function App() {
 
-
+ 
 
 
   return (
@@ -26,7 +28,7 @@ function App() {
 
 
         <Link   to=" "><h1 style={{ textAlign: 'left', paddingLeft: '40px' }}> Home  </h1></Link>
-
+         
 
     
         <ul className="header2 "  >
@@ -54,15 +56,20 @@ function App() {
             <NavLink    to="/signup">SignUp</NavLink>
 
           </li>
+          <li>
+            {/* <Link to="exact/activity">Activity</Link> */}
+            
+            
+          </li>
         </ul>
       </div>
-
+       
       <Context>
         <Routes>
           <Route   path='' element={<Home />}></Route>
-          <Route   path='/profile' element={< Profile />}></Route>
-          <Route   path='/address' element={< Address />}></Route>
-          <Route   path='/activity' element={< Activity />}></Route>
+          <Route   path='/profile' element={<NavigateUser>< Profile /></NavigateUser>}></Route>
+          <Route   path='/address' element={<NavigateUser>< Address /></NavigateUser> }></Route>
+          <Route   path='/activity' element={<NavigateUser>< Activity /></NavigateUser>}></Route>
           <Route   path='/login' element={< LoginForm />}></Route>
           <Route   path='/signup' element={< SignUpForm />}></Route>
           <Route   path='*' element={<div>  Page Not Found </div>}></Route>
